@@ -10,7 +10,6 @@ public abstract class Scheduler {
     protected float averageWaitingTime;
     protected float averageTurnAroundTime;
     protected ArrayList<Process> processes;
-    protected ArrayList<Process> outputProcesses; // edit ?
 
     public Scheduler(int numOfProcesses, ArrayList<Process> processes, String name) {
         this.numOfProcesses = numOfProcesses;
@@ -21,8 +20,4 @@ public abstract class Scheduler {
     }
 
     public abstract void simulate();
-
-    public ArrayList<Process> getOutputProcesses() {
-        return outputProcesses;
-    }
 }

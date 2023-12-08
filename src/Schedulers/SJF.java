@@ -4,6 +4,7 @@ import Process.Process;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Vector;
 
 public class SJF extends Scheduler {
     private int contextSwitching;
@@ -21,6 +22,8 @@ public class SJF extends Scheduler {
 
         int counter = 0, totalTime = 0, j = 0;
         while(j < numOfProcesses){
+            int start, end;
+            Vector<Integer> v = new Vector<>();
             // if arrived, take it
             if(counter <= processes.get(j).getArrivalTime()) {
                 int currBurstTime = processes.get(j).getBurstTime(), currWaitingTime;
@@ -31,6 +34,13 @@ public class SJF extends Scheduler {
                     currWaitingTime = contextSwitching;
                 else
                     currWaitingTime = currTurnAroundTime - currBurstTime;
+
+                start = processes.get(j).getArrivalTime() + currWaitingTime;
+                end = start + currBurstTime;
+                v.add(start);
+                v.add(end);
+//                System.out.println(start + " " + end);
+                processes.get(j).getStartEndTime().add(v);
 
                 processes.get(j).setTurnAroundTime(currTurnAroundTime);
                 processes.get(j).setWaitingTime(currWaitingTime);

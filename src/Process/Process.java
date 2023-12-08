@@ -1,5 +1,7 @@
 package Process;
 
+import java.util.Vector;
+
 public class Process {
     private int arrivalTime;
     private int burstTime;
@@ -12,14 +14,16 @@ public class Process {
     private int PID;
     private String name;
     private String color;
+    private Vector<Vector<Integer>> startEndTime = new Vector<>();
+    private Vector<Integer> quantumUpdates = new Vector<>();
 
     public Process(String name, String color, int arrivalTime, int burstTime, int priority, int quantum, int id) {
         this.name = name;
         this.color = color;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
-        this.priority = priority; // edit - convert to priority?
-        this.quantum = quantum; // edit - convert to AG?
+        this.priority = priority;
+        this.quantum = quantum;
         this.turnAroundTime = 0;
         this.remainingTime = 0;
         this.waitingTime = 0;
@@ -113,5 +117,21 @@ public class Process {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public Vector<Vector<Integer>> getStartEndTime() {
+        return startEndTime;
+    }
+
+    public void setStartEndTime(Vector<Vector<Integer>> startEndTime) {
+        this.startEndTime = startEndTime;
+    }
+
+    public Vector<Integer> getQuantumUpdates() {
+        return quantumUpdates;
+    }
+
+    public void setQuantumUpdates(Vector<Integer> quantumUpdates) {
+        this.quantumUpdates = quantumUpdates;
     }
 }
