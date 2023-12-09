@@ -74,10 +74,11 @@ public class Main {
                     }
                     default -> System.out.println("Incorrect number, please try again & choose a number between [1-5]");
                 }
-                scheduler.simulate();
-
-                // output form
-                OutputScreen output = new OutputScreen(scheduler);
+                if (scheduler != null) {
+                    scheduler.simulate();
+                    // output form for the selected scheduler
+                    new OutputScreen(scheduler);
+                }
             }
         }
     }

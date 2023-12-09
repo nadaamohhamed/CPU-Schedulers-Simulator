@@ -19,7 +19,7 @@ public class SJF extends Scheduler {
     public void simulate() {
         // sort processes by their arrival time first and then burst time
         processes.sort(Comparator.comparingInt(Process::getArrivalTime));
-        PriorityQueue<Process> readyQueue = new PriorityQueue<Process>(new Comparator<Process>() {
+        PriorityQueue<Process> readyQueue = new PriorityQueue<>(new Comparator<Process>() {
             public int compare(Process p1, Process p2) {
                 return Integer.compare(p1.getBurstTime(), p2.getBurstTime());
             }
@@ -27,9 +27,10 @@ public class SJF extends Scheduler {
 
         int totalTime = 0, j = 0;
         ArrayList<Process> dieList = new ArrayList<>();
+
         while(j < numOfProcesses) {
             if(!processes.isEmpty()) {
-                // if arrived, take all the arrived processes
+                // if there is arrived processes, take them all to ready queue
                 while (totalTime >= processes.get(0).getArrivalTime()) {
                     readyQueue.add(processes.get(0));
                     processes.remove(0);
@@ -38,33 +39,35 @@ public class SJF extends Scheduler {
                 }
             }
             if (!readyQueue.isEmpty()) {
-                Process currProcess = readyQueue.poll();
+                // get the process with the smallest burst time from the ready queue
+                Process runningProcess = readyQueue.poll();
                 j++;
 
                 Vector<Integer> v = new Vector<>();
-                int currBurstTime = currProcess.getBurstTime(), currWaitingTime, start, end;
+                int currBurstTime = runningProcess.getBurstTime(), currWaitingTime, start, end;
                 totalTime += contextSwitching + currBurstTime;
-                int currTurnAroundTime = totalTime - currProcess.getArrivalTime();
+                int currTurnAroundTime = totalTime - runningProcess.getArrivalTime();
 
                 if (j == 1) // first process is added
                     currWaitingTime = contextSwitching;
                 else
                     currWaitingTime = currTurnAroundTime - currBurstTime;
 
-                start = currProcess.getArrivalTime() + currWaitingTime;
+                start = runningProcess.getArrivalTime() + currWaitingTime;
                 end = start + currBurstTime;
                 v.add(start);
                 v.add(end);
+                runningProcess.getStartEndTime().add(v);
 //                System.out.println(start + " " + end);
-                currProcess.getStartEndTime().add(v);
 
-                currProcess.setTurnAroundTime(currTurnAroundTime);
-                currProcess.setWaitingTime(currWaitingTime);
+                runningProcess.setTurnAroundTime(currTurnAroundTime);
+                runningProcess.setWaitingTime(currWaitingTime);
 
                 averageWaitingTime += currWaitingTime;
                 averageTurnAroundTime += currTurnAroundTime;
 
-                dieList.add(currProcess);
+                // add the process to die list after finishing its job
+                dieList.add(runningProcess);
             }
             else
                 totalTime++;

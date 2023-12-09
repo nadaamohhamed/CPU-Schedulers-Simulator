@@ -24,8 +24,8 @@ public class Process {
         this.burstTime = burstTime;
         this.priority = priority;
         this.quantum = quantum;
+        this.remainingTime = burstTime;
         this.turnAroundTime = 0;
-        this.remainingTime = 0;
         this.waitingTime = 0;
         this.randomFunction = (int)(Math.random() * 20);
         this.PID = id;
