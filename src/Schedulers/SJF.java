@@ -71,7 +71,7 @@ public class SJF extends Scheduler {
             else
                 totalTime++;
         }
-        processes = dieList;
+        processes.addAll(dieList);
         averageWaitingTime /= (float) numOfProcesses;
         averageTurnAroundTime /= (float) numOfProcesses;
 

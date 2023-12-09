@@ -7,11 +7,11 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        while (true) {
-            int numOfProcesses, RRQuantum, contextSwitching;
-            System.out.println("Welcome to CPU Schedulers Simulator!");
-            System.out.println("-------------------------------------------");
+        int numOfProcesses, RRQuantum, contextSwitching;
+        System.out.println("Welcome to CPU Schedulers Simulator!");
 
+        while (true) {
+            System.out.println("-------------------------------------------");
             Scanner scan = new Scanner(System.in);
             System.out.println("What is the number of processes?");
             System.out.print(">> ");
@@ -49,26 +49,37 @@ public class Main {
                 Process process = new Process(name, color, arrivalTime, burstTime, priority, RRQuantum, IDs++);
                 processes.add(process);
             }
-
+            boolean showOptions = true;
             String options = """ 
                     \nPlease choose one of the following options:
                     1. SJF - Non-preemptive
                     2. SRTF - Preemptive
                     3. Priority Scheduling - Non-preemptive
                     4. AG Scheduling
-                    5. Exit
+                    5. Return and add new inputs
+                    6. Exit
                     """;
-            while (true) {
+            while (showOptions) {
+                ArrayList<Process> currProcesses = new ArrayList<>();
+                // deep copy processes
+                for(int i = 0;i<numOfProcesses;i++){
+                    Process process = processes.get(i);
+                    currProcesses.add(new Process(
+                            process.getName(), process.getColor(), process.getArrivalTime(),
+                            process.getBurstTime(), process.getPriority(), process.getQuantum(), process.getPID()
+                    ));
+                }
                 System.out.print(options);
                 System.out.print(">> ");
                 String choice = scan.next();
                 Scheduler scheduler = null;
                 switch (choice) {
-                    case "1" -> scheduler = new SJF(numOfProcesses, processes, contextSwitching);
-                    case "2" -> scheduler = new SRTF(numOfProcesses, processes);
-                    case "3" -> scheduler = new PriorityScheduling(numOfProcesses, processes);
-                    case "4" -> scheduler = new AGScheduling(numOfProcesses, processes);
-                    case "5" -> {
+                    case "1" -> scheduler = new SJF(numOfProcesses, currProcesses, contextSwitching);
+                    case "2" -> scheduler = new SRTF(numOfProcesses, currProcesses);
+                    case "3" -> scheduler = new PriorityScheduling(numOfProcesses, currProcesses);
+                    case "4" -> scheduler = new AGScheduling(numOfProcesses, currProcesses);
+                    case "5" -> showOptions = false;
+                    case "6" -> {
                         System.out.println("Thank you for using our simulator!");
                         System.exit(0);
                     }
