@@ -1,6 +1,8 @@
 import GUI.OutputScreen;
 import Process.Process;
 import Schedulers.*;
+import Utilities.ProcessDataGenerator;
+import Utilities.ProcessDataReader;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -8,46 +10,58 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         int numOfProcesses, RRQuantum, contextSwitching;
+        boolean readingFromFile = true;
+        Scanner scan = new Scanner(System.in);
+        ArrayList<Process> processes = new ArrayList<>();
         System.out.println("Welcome to CPU Schedulers Simulator!");
 
         while (true) {
-            System.out.println("-------------------------------------------");
-            Scanner scan = new Scanner(System.in);
-            System.out.println("What is the number of processes?");
-            System.out.print(">> ");
-            numOfProcesses = scan.nextInt();
-
-            System.out.println("What is the Round-Robin time quantum?");
-            System.out.print(">> ");
-            RRQuantum = scan.nextInt();
-
-            System.out.println("What is the context switching time?");
-            System.out.print(">> ");
-            contextSwitching = scan.nextInt();
-
-            int IDs = (int)(Math.random() * (5000 - 1) + 1);
-
-            ArrayList<Process> processes = new ArrayList<>();
-            for(int i = 0;i<numOfProcesses;i++){
+            if(readingFromFile){
+                ProcessDataGenerator.generateAndWriteProcessData("process_data.txt");
+                ProcessDataReader.readProcessesFromFile("process_data.txt");
+                numOfProcesses = ProcessDataReader.numOfProcesses;
+                RRQuantum = ProcessDataReader.quantumValue;
+                contextSwitching = ProcessDataReader.contextSwitchingTime;
+                processes = ProcessDataReader.processes;
+            }else {
                 System.out.println("-------------------------------------------");
-                int arrivalTime, burstTime, priority;
-                System.out.println("Process " + (i+1) + " name:");
+
+                System.out.println("What is the number of processes?");
                 System.out.print(">> ");
-                String name = scan.next();
-                System.out.println("Process " + (i+1) + " color (HEXA-#rrggbb):");
+                numOfProcesses = scan.nextInt();
+
+                System.out.println("What is the Round-Robin time quantum?");
                 System.out.print(">> ");
-                String color = scan.next();
-                System.out.println("Process " + (i+1) + " arrival time:");
+                RRQuantum = scan.nextInt();
+
+                System.out.println("What is the context switching time?");
                 System.out.print(">> ");
-                arrivalTime = scan.nextInt();
-                System.out.println("Process " + (i+1) + " burst time:");
-                System.out.print(">> ");
-                burstTime = scan.nextInt();
-                System.out.println("Process " + (i+1) + " priority number:");
-                System.out.print(">> ");
-                priority = scan.nextInt();
-                Process process = new Process(name, color, arrivalTime, burstTime, priority, RRQuantum, IDs++, i);
-                processes.add(process);
+                contextSwitching = scan.nextInt();
+
+                int IDs = (int) (Math.random() * (5000 - 1) + 1);
+
+
+                for (int i = 0; i < numOfProcesses; i++) {
+                    System.out.println("-------------------------------------------");
+                    int arrivalTime, burstTime, priority;
+                    System.out.println("Process " + (i + 1) + " name:");
+                    System.out.print(">> ");
+                    String name = scan.next();
+                    System.out.println("Process " + (i + 1) + " color (HEXA-#rrggbb):");
+                    System.out.print(">> ");
+                    String color = scan.next();
+                    System.out.println("Process " + (i + 1) + " arrival time:");
+                    System.out.print(">> ");
+                    arrivalTime = scan.nextInt();
+                    System.out.println("Process " + (i + 1) + " burst time:");
+                    System.out.print(">> ");
+                    burstTime = scan.nextInt();
+                    System.out.println("Process " + (i + 1) + " priority number:");
+                    System.out.print(">> ");
+                    priority = scan.nextInt();
+                    Process process = new Process(name, color, arrivalTime, burstTime, priority, RRQuantum, IDs++, i);
+                    processes.add(process);
+                }
             }
             boolean showOptions = true;
             String options = """ 
