@@ -34,7 +34,7 @@ public class Main {
                 System.out.println("Process " + (i+1) + " name:");
                 System.out.print(">> ");
                 String name = scan.next();
-                System.out.println("Process " + (i+1) + " color:");
+                System.out.println("Process " + (i+1) + " color (HEXA-#rrggbb):");
                 System.out.print(">> ");
                 String color = scan.next();
                 System.out.println("Process " + (i+1) + " arrival time:");
