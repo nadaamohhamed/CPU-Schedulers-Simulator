@@ -46,7 +46,7 @@ public class Main {
                 System.out.println("Process " + (i+1) + " priority number:");
                 System.out.print(">> ");
                 priority = scan.nextInt();
-                Process process = new Process(name, color, arrivalTime, burstTime, priority, RRQuantum, IDs++);
+                Process process = new Process(name, color, arrivalTime, burstTime, priority, RRQuantum, IDs++, i);
                 processes.add(process);
             }
             boolean showOptions = true;
@@ -66,7 +66,7 @@ public class Main {
                     Process process = processes.get(i);
                     currProcesses.add(new Process(
                             process.getName(), process.getColor(), process.getArrivalTime(),
-                            process.getBurstTime(), process.getPriority(), process.getQuantum(), process.getPID()
+                            process.getBurstTime(), process.getPriority(), process.getQuantum(), process.getPID(), process.getIndex()
                     ));
                 }
                 System.out.print(options);

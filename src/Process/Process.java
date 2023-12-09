@@ -12,12 +12,13 @@ public class Process {
     private int priority;
     private int quantum;
     private int PID;
+    private int index;
     private String name;
     private String color;
     private Vector<Vector<Integer>> startEndTime = new Vector<>();
     private Vector<Integer> quantumUpdates = new Vector<>();
 
-    public Process(String name, String color, int arrivalTime, int burstTime, int priority, int quantum, int id) {
+    public Process(String name, String color, int arrivalTime, int burstTime, int priority, int quantum, int id, int index) {
         this.name = name;
         this.color = color;
         this.arrivalTime = arrivalTime;
@@ -27,8 +28,9 @@ public class Process {
         this.remainingTime = burstTime;
         this.turnAroundTime = 0;
         this.waitingTime = 0;
-        this.randomFunction = (int)(Math.random() * 20);
+        this.randomFunction = (int) (Math.random() * 20);
         this.PID = id;
+        this.index = index;
     }
 
     public int getArrivalTime() {
@@ -101,6 +103,14 @@ public class Process {
 
     public void setPID(int PID) {
         this.PID = PID;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public String getName() {
