@@ -20,4 +20,29 @@ public abstract class Scheduler {
     }
 
     public abstract void simulate();
+
+
+    public float getAverageWaitingTime() {
+        return averageWaitingTime;
+    }
+
+    public void setAverageWaitingTime(float averageWaitingTime) {
+        this.averageWaitingTime = averageWaitingTime;
+    }
+
+    public float getAverageTurnAroundTime() {
+        return averageTurnAroundTime;
+    }
+
+    public void setAverageTurnAroundTime(float averageTurnAroundTime) {
+        this.averageTurnAroundTime = averageTurnAroundTime;
+    }
+
+    public ArrayList<Process> getProcesses() {
+        return processes;
+    }
+
+    public void setProcesses(ArrayList<Process> processes) {
+        this.processes = processes;
+    }
 }
