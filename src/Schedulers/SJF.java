@@ -25,10 +25,10 @@ public class SJF extends Scheduler {
             }
         });
 
-        int totalTime = 0, j = 0;
+        int totalTime = 0, processesDone = 0;
         ArrayList<Process> dieList = new ArrayList<>();
 
-        while(j < numOfProcesses) {
+        while(processesDone < numOfProcesses) {
             if(!processes.isEmpty()) {
                 // if there is arrived processes, take them all to ready queue
                 while (totalTime >= processes.get(0).getArrivalTime()) {
@@ -41,14 +41,14 @@ public class SJF extends Scheduler {
             if (!readyQueue.isEmpty()) {
                 // get the process with the smallest burst time from the ready queue
                 Process runningProcess = readyQueue.poll();
-                j++;
+                processesDone++;
 
                 Vector<Integer> v = new Vector<>();
                 int currBurstTime = runningProcess.getBurstTime(), currWaitingTime, start, end;
                 totalTime += contextSwitching + currBurstTime;
                 int currTurnAroundTime = totalTime - runningProcess.getArrivalTime();
 
-                if (j == 1) // first process is added
+                if (processesDone == 1) // first process
                     currWaitingTime = contextSwitching;
                 else
                     currWaitingTime = currTurnAroundTime - currBurstTime;
@@ -58,7 +58,6 @@ public class SJF extends Scheduler {
                 v.add(start);
                 v.add(end);
                 runningProcess.getStartEndTime().add(v);
-//                System.out.println(start + " " + end);
 
                 runningProcess.setTurnAroundTime(currTurnAroundTime);
                 runningProcess.setWaitingTime(currWaitingTime);
