@@ -144,4 +144,10 @@ public class Process {
     public void setQuantumUpdates(Vector<Integer> quantumUpdates) {
         this.quantumUpdates = quantumUpdates;
     }
+    public Process copy(){
+        return (new Process(
+                name, color, arrivalTime, burstTime,
+                priority, quantum, PID, index
+        ));
+    }
 }

@@ -62,13 +62,9 @@ public class Main {
             while (showOptions) {
                 ArrayList<Process> currProcesses = new ArrayList<>();
                 // deep copy processes
-                for(int i = 0;i<numOfProcesses;i++){
-                    Process process = processes.get(i);
-                    currProcesses.add(new Process(
-                            process.getName(), process.getColor(), process.getArrivalTime(),
-                            process.getBurstTime(), process.getPriority(), process.getQuantum(), process.getPID(), process.getIndex()
-                    ));
-                }
+                for (Process p : processes)
+                    currProcesses.add(p.copy());
+
                 System.out.print(options);
                 System.out.print(">> ");
                 String choice = scan.next();
