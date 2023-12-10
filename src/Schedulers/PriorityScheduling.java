@@ -72,15 +72,5 @@ public class PriorityScheduling extends Scheduler {
         }
         averageWaitingTime /= numOfProcesses;
         averageTurnAroundTime /= numOfProcesses;
-
-        System.out.println("-------------------------------------------");
-        for(Process p : processes){
-            System.out.println("Process " +  p.getPID() + " - " +p.getName());
-            System.out.println("    Waiting time: " + p.getWaitingTime());
-            System.out.println("    Turnaround time: " + p.getTurnAroundTime());
-            System.out.println("-------------------------------------------");
-        }
-        System.out.println("Average waiting time: " + averageWaitingTime);
-        System.out.println("Average turnaround time: " + averageTurnAroundTime);
     }
 }

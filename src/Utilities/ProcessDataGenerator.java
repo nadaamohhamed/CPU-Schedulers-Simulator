@@ -31,7 +31,7 @@ public class ProcessDataGenerator {
             for (int i = 0; i < NUMBER_OF_PROCESSES; i++) {
                 String processName = "Process " + i;
                 String processColor = generateRandomColorHex();
-                int arrivalTime = getRandomNumberInRange(0, 0);
+                int arrivalTime = getRandomNumberInRange(0, 30);
                 int burstTime = getRandomNumberInRange(5, 10);
                 int priority = getRandomNumberInRange(0, 128);
 

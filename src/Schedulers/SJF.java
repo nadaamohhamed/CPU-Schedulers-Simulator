@@ -32,14 +32,10 @@ public class SJF extends Scheduler {
         ArrayList<Process> dieList = new ArrayList<>();
 
         while(processesDone < numOfProcesses) {
-            if(!processes.isEmpty()) {
                 // if there are arrived processes, take them all to ready queue
-                while (totalTime >= processes.get(0).getArrivalTime()) {
-                    readyQueue.add(processes.get(0));
-                    processes.remove(0);
-                    if (processes.isEmpty())
-                        break;
-                }
+            while (!processes.isEmpty() && totalTime >= processes.get(0).getArrivalTime()) {
+                readyQueue.add(processes.get(0));
+                processes.remove(0);
             }
             if (!readyQueue.isEmpty()) {
                 // get the process with the smallest burst time from the ready queue
@@ -56,15 +52,19 @@ public class SJF extends Scheduler {
                 else
                     currWaitingTime = currTurnAroundTime - currBurstTime;
 
+                // set the start and end time for each process
                 start = runningProcess.getArrivalTime() + currWaitingTime;
                 end = start + currBurstTime;
                 v.add(start);
                 v.add(end);
                 runningProcess.getStartEndTime().add(v);
 
+                // update waiting, turnaround, remaining time for the running process
                 runningProcess.setTurnAroundTime(currTurnAroundTime);
                 runningProcess.setWaitingTime(currWaitingTime);
+                runningProcess.setRemainingTime(0);
 
+                // add the current process waiting, turnaround time to average
                 averageWaitingTime += currWaitingTime;
                 averageTurnAroundTime += currTurnAroundTime;
 
@@ -75,18 +75,9 @@ public class SJF extends Scheduler {
                 totalTime++;
         }
         processes.addAll(dieList);
+
+        // divide sum by its number of processes to get the average
         averageWaitingTime /= (float) numOfProcesses;
         averageTurnAroundTime /= (float) numOfProcesses;
-
-        // test only, yet to be converted to gui
-        System.out.println("-------------------------------------------");
-        for(int i = 0; i < numOfProcesses; i++){
-            System.out.println("Process " +  processes.get(i).getPID() + " - " + processes.get(i).getName());
-            System.out.println("    Waiting time: " + processes.get(i).getWaitingTime());
-            System.out.println("    Turnaround time: " + processes.get(i).getTurnAroundTime());
-            System.out.println("-------------------------------------------");
-        }
-        System.out.println("Average waiting time: " + averageWaitingTime);
-        System.out.println("Average turnaround time: " + averageTurnAroundTime);
     }
 }

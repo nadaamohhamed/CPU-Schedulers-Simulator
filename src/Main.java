@@ -14,6 +14,7 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         ArrayList<Process> processes = new ArrayList<>();
         System.out.println("Welcome to CPU Schedulers Simulator!");
+        System.out.println("-------------------------------------------------------------");
 
         while (true) {
             if(readingFromFile){
@@ -23,8 +24,9 @@ public class Main {
                 RRQuantum = ProcessDataReader.quantumValue;
                 contextSwitching = ProcessDataReader.contextSwitchingTime;
                 processes = ProcessDataReader.processes;
+                System.out.println("-------------------------------------------------------------");
             }else {
-                System.out.println("-------------------------------------------");
+                System.out.println("-------------------------------------------------------------");
 
                 System.out.println("What is the number of processes?");
                 System.out.print(">> ");
@@ -42,7 +44,7 @@ public class Main {
 
 
                 for (int i = 0; i < numOfProcesses; i++) {
-                    System.out.println("-------------------------------------------");
+                    System.out.println("-------------------------------------------------------------");
                     int arrivalTime, burstTime, priority;
                     System.out.println("Process " + (i + 1) + " name:");
                     System.out.print(">> ");
@@ -96,8 +98,10 @@ public class Main {
                     default -> System.out.println("Incorrect number, please try again & choose a number between [1-5]");
                 }
                 if (scheduler != null) {
+                    // simulate and output processes information
                     scheduler.simulate();
-                    // output form for the selected scheduler
+                    scheduler.printProcesses();
+                    // GUI screen for the process execution order
                     new OutputScreen(scheduler);
                 }
             }

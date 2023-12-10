@@ -121,26 +121,6 @@ public class SRTF extends Scheduler {
 
         averageWaitingTime /= (float) numOfProcesses;
         averageTurnAroundTime /= (float) numOfProcesses;
-
-//   c a b p
-//p1 0 0 5 1    0 -> 5
-//p2 1 3 2 4    5 -> 7
-//p3 4 1 25 8   7 -> 11  12-> 33
-//p4 4 4 1 9    11-> 12
-
-        // test only, yet to be converted to gui
-        System.out.println("-------------------------------------------");
-        for (int i = 0; i < numOfProcesses; i++) {
-            for (Vector<Integer> interval : processes.get(i).getStartEndTime()) {
-                System.out.println("Start: " + interval.get(0) + "\tEnd: " + interval.get(1));
-            }
-            System.out.println("Process " + processes.get(i).getPID() + " - " + processes.get(i).getName());
-            System.out.println("    Waiting time: " + processes.get(i).getWaitingTime());
-            System.out.println("    Turnaround time: " + processes.get(i).getTurnAroundTime());
-            System.out.println("-------------------------------------------");
-        }
-        System.out.println("Average waiting time: " + averageWaitingTime);
-        System.out.println("Average turnaround time: " + averageTurnAroundTime);
     }
 }
 
