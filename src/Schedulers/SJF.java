@@ -21,6 +21,9 @@ public class SJF extends Scheduler {
         processes.sort(Comparator.comparingInt(Process::getArrivalTime));
         PriorityQueue<Process> readyQueue = new PriorityQueue<>(new Comparator<Process>() {
             public int compare(Process p1, Process p2) {
+                if (p1.getBurstTime() == p2.getBurstTime()) {
+                    return Integer.compare(p1.getArrivalTime(), p2.getArrivalTime());
+                }
                 return Integer.compare(p1.getBurstTime(), p2.getBurstTime());
             }
         });
@@ -30,7 +33,7 @@ public class SJF extends Scheduler {
 
         while(processesDone < numOfProcesses) {
             if(!processes.isEmpty()) {
-                // if there is arrived processes, take them all to ready queue
+                // if there are arrived processes, take them all to ready queue
                 while (totalTime >= processes.get(0).getArrivalTime()) {
                     readyQueue.add(processes.get(0));
                     processes.remove(0);
