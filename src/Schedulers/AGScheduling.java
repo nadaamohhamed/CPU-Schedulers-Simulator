@@ -10,7 +10,6 @@ public class AGScheduling extends Scheduler {
     ArrayList<AGProcess> AGProcesses;
     Queue<AGProcess> readyQueue = new LinkedList<>();
     ArrayList<AGProcess> dieList = new ArrayList<>();
-    Vector<HashMap<String,Integer>> QuantumUpdates = new Vector<>();
     AGProcess activeProcess = null;
 
     public AGScheduling(int numOfProcesses, ArrayList<Process> processes) {
@@ -46,25 +45,24 @@ public class AGScheduling extends Scheduler {
             AGProcesses.add(process);
         }
         // to be like the example in assignment pdf uncomment the following lines
-//        AGProcesses.get(0).setAGFactor(20);
-//        AGProcesses.get(1).setAGFactor(17);
-//        AGProcesses.get(2).setAGFactor(16);
-//        AGProcesses.get(3).setAGFactor(43);
+        AGProcesses.get(0).setAGFactor(20);
+        AGProcesses.get(1).setAGFactor(17);
+        AGProcesses.get(2).setAGFactor(16);
+        AGProcesses.get(3).setAGFactor(43);
     }
     void addHistory(){
-        // loop over all processes and add their quantum to the history
-        HashMap<String,Integer> history = new HashMap<>();
-        history.put(activeProcess.getName(), activeProcess.getQuantum());
+        // loop over all processes and add their quantum to the quantum updates history
+
+        activeProcess.quantumUpdates.add(activeProcess.getQuantum());
         for(AGProcess process : AGProcesses){
-            history.put(process.getName(), process.getQuantum());
+            process.quantumUpdates.add(process.getQuantum());
         }
         for(AGProcess process : readyQueue){
-            history.put(process.getName(), process.getQuantum());
+            process.quantumUpdates.add(process.getQuantum());
         }
         for(AGProcess process : dieList){
-            history.put(process.getName(), process.getQuantum());
+            process.quantumUpdates.add(process.getQuantum());
         }
-        QuantumUpdates.add(history);
     }
     @Override
     public void simulate() {
