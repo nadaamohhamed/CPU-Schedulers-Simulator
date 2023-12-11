@@ -1,7 +1,6 @@
 import GUI.OutputScreen;
 import Process.Process;
 import Schedulers.*;
-import Utilities.ProcessDataGenerator;
 import Utilities.ProcessDataReader;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public class Main {
 
         while (true) {
             if(readingFromFile){
-                ProcessDataGenerator.generateAndWriteProcessData("process_data.txt");
+//                ProcessDataGenerator.generateAndWriteProcessData("process_data.txt");
                 ProcessDataReader.readProcessesFromFile("process_data.txt");
                 numOfProcesses = ProcessDataReader.numOfProcesses;
                 RRQuantum = ProcessDataReader.quantumValue;
