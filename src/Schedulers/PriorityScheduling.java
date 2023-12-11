@@ -11,19 +11,9 @@ public class PriorityScheduling extends Scheduler {
     public void simulate() {
         // Sort the processes by arrival time
         processes.sort(Comparator.comparingInt(Process::getArrivalTime));
+
         // Create a priority queue to store the ready processes
-        // The priority is based on the process priority and the waiting time
-        // The longer a process waits, the higher its priority becomes
-        PriorityQueue<Process> readyQueue = new PriorityQueue<>(new Comparator<Process>() {
-            public int compare(Process p1, Process p2) {
-                // If the priorities are equal, compare the waiting times
-                if (p1.getPriority() == p2.getPriority()) {
-                    return Integer.compare(p1.getWaitingTime(), p2.getWaitingTime());
-                }
-                // Otherwise, compare the priorities
-                return Integer.compare(p1.getPriority(), p2.getPriority());
-            }
-        });
+        PriorityQueue<Process> readyQueue = new PriorityQueue<>(Comparator.comparingInt(Process::getPriority));
         // Create a list to store the finished processes
         ArrayList<Process> finishedList = new ArrayList<>();
         // Initialize the current time and the current process index
@@ -58,9 +48,11 @@ public class PriorityScheduling extends Scheduler {
                 // If the ready queue is empty, increment the current time
                 currentTime++;
             }
-            // Update the waiting time of the processes in the ready queue
+
             for (Process p : readyQueue) {
-                p.setWaitingTime(p.getWaitingTime() + 1);
+                int waitingTime = currentTime - p.getArrivalTime();
+                int priorityIncrease = waitingTime / 10;
+                p.setPriority(Math.max(0, p.getPriority() - priorityIncrease));
             }
         }
         // Set the processes to the finished list
