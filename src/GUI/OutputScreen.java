@@ -6,7 +6,7 @@ import Schedulers.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class OutputScreen extends javax.swing.JFrame {
+public class OutputScreen extends JFrame {
 
     private static Scheduler scheduler;
     private static String scheduleInstance = "NA";
@@ -33,30 +33,52 @@ public class OutputScreen extends javax.swing.JFrame {
     }
 
     private void initComponents() {
+
         timelinePanel = new ProcessTimelineGraph(scheduler);
-        tablePanel = new ProcessTablePanel(scheduler);
-        quantumHistoryTable = new QuantumHistoryTablePanel(scheduler);
+        processTablePanel = new ProcessTablePanel(scheduler);
+        quantumTablePanel = new QuantumHistoryTablePanel(scheduler);
+        bottomPanel = new javax.swing.JPanel();
 
-        graphScrollPane = new javax.swing.JScrollPane();
-        tableScrollPane = new javax.swing.JScrollPane();
-        quantumScroll = new javax.swing.JScrollPane();
+        timelineScrollPane = new javax.swing.JScrollPane();
+        processTableScrollPane = new javax.swing.JScrollPane();
+        quantumTableScrollPane = new javax.swing.JScrollPane();
 
-
-
-        GraphTitle = new javax.swing.JLabel();
-        TableTitle = new javax.swing.JLabel();
-        BottomPanel = new javax.swing.JPanel();
-        StatsTitle = new javax.swing.JLabel();
+        timelineLabel = new javax.swing.JLabel();
+        processTableLabel = new javax.swing.JLabel();
         scheduleLabel = new javax.swing.JLabel();
         awtLabel = new javax.swing.JLabel();
         atatLabel = new javax.swing.JLabel();
+        quantumTableLabel = new javax.swing.JLabel();
+        statLabel = new javax.swing.JLabel();
+
+        timelineLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 24)); // NOI18N
+        timelineLabel.setText("CPU Scheduling Graph");
+
+        processTableLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 24)); // NOI18N
+        processTableLabel.setText("Processes Information");
+
+        scheduleLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14)); // NOI18N
+        scheduleLabel.setText("Schedule Name: " + scheduleInstance);
+
+        awtLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14)); // NOI18N
+        awtLabel.setText("AWT: " + scheduler.getAverageWaitingTime());
+
+        atatLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14)); // NOI18N
+        atatLabel.setText("ATAT: " + scheduler.getAverageTurnAroundTime());
+
+        quantumTableLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 24)); // NOI18N
+        quantumTableLabel.setText("Quantum Update History");
+
+        statLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 24)); // NOI18N
+        statLabel.setText("Statistics");
 
         if(!scheduleInstance.equals("AG Scheduler")){
-            quantumHistoryTable.setVisible(false);
-            quantumScroll.setVisible(false);
+            quantumTablePanel.setVisible(false);
+            quantumTableScrollPane.setVisible(false);
+            quantumTableLabel.setVisible(false);
         }
 
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         timelinePanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -71,12 +93,12 @@ public class OutputScreen extends javax.swing.JFrame {
                         .addGap(0, 432, Short.MAX_VALUE)
         );
 
-        graphScrollPane.setViewportView(timelinePanel);
+        processTableScrollPane.setViewportView(timelinePanel);
 
-        graphScrollPane.setPreferredSize(new Dimension(200, 200));
+        processTableScrollPane.setPreferredSize(timelinePanel.getPreferredSize());
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(tablePanel);
-        tablePanel.setLayout(jPanel3Layout);
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(processTablePanel);
+        processTablePanel.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGap(0, 620, Short.MAX_VALUE)
@@ -86,72 +108,50 @@ public class OutputScreen extends javax.swing.JFrame {
                         .addGap(0, 432, Short.MAX_VALUE)
         );
 
-        tableScrollPane.setViewportView(tablePanel);
-        tableScrollPane.setPreferredSize(new Dimension(620, 432));
+        timelineScrollPane.setViewportView(processTablePanel);
 
-        quantumScroll.setViewportView(quantumHistoryTable);
-        quantumScroll.setPreferredSize(new Dimension(620, 174));
-
-
-        GraphTitle.setFont(new java.awt.Font("Segoe UI", 1, 24));
-        GraphTitle.setText("CPU Scheduling Graph");
-
-        TableTitle.setFont(new java.awt.Font("Segoe UI", 1, 24));
-        TableTitle.setText("Processes Information");
-
-        StatsTitle.setFont(new java.awt.Font("Segoe UI", 1, 24));
-        StatsTitle.setText("Statistics");
-
-        scheduleLabel.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        scheduleLabel.setText("Schedule Name: " + scheduleInstance);
-
-        awtLabel.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        awtLabel.setText("AWT: " + scheduler.getAverageWaitingTime());
-
-        atatLabel.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        atatLabel.setText("ATAT: " + scheduler.getAverageTurnAroundTime());
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(quantumHistoryTable);
-        quantumHistoryTable.setLayout(jPanel5Layout);
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(quantumTablePanel);
+        quantumTablePanel.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
                 jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGap(0, 620, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
                 jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 174, Short.MAX_VALUE)
+                        .addGap(0, 326, Short.MAX_VALUE)
         );
+        quantumTableScrollPane.setViewportView(quantumTablePanel);
+        quantumTableScrollPane.setPreferredSize(new Dimension(700, 326));
 
-        quantumScroll.setViewportView(quantumHistoryTable);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(BottomPanel);
-        BottomPanel.setLayout(jPanel2Layout);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(bottomPanel);
+        bottomPanel.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(StatsTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(awtLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(atatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(awtLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(scheduleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(324, 324, 324)
-                                .addComponent(quantumScroll))
+                                .addGap(320, 320, 320)
+                                .addComponent(quantumTableScrollPane))
         );
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(StatsTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(scheduleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(awtLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(atatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(quantumTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(scheduleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(awtLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(atatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(quantumScroll)
         );
+
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -160,17 +160,20 @@ public class OutputScreen extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(BottomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(bottomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(graphScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(GraphTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(processTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(timelineLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(statLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(timelineScrollPane)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(TableTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(0, 0, Short.MAX_VALUE))
-                                                        .addComponent(tableScrollPane))))
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(processTableLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(quantumTableLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(0, 0, Short.MAX_VALUE)))))
                                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -178,33 +181,37 @@ public class OutputScreen extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(GraphTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(TableTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(timelineLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(processTableLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(graphScrollPane)
-                                        .addComponent(tableScrollPane))
+                                        .addComponent(processTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+                                        .addComponent(timelineScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BottomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(quantumTableLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(statLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bottomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addContainerGap())
         );
-
         pack();
     }
 
     // Variables declaration
-    private javax.swing.JLabel GraphTitle;
-    private javax.swing.JLabel TableTitle;
-    private javax.swing.JLabel StatsTitle;
+    private javax.swing.JLabel timelineLabel;
+    private javax.swing.JLabel processTableLabel;
+    private javax.swing.JLabel statLabel;
     private javax.swing.JLabel scheduleLabel;
     private javax.swing.JLabel awtLabel;
     private javax.swing.JLabel atatLabel;
+    private javax.swing.JLabel quantumTableLabel;
     private javax.swing.JPanel timelinePanel;
-    private javax.swing.JPanel BottomPanel;
-    private javax.swing.JPanel tablePanel;
-    private javax.swing.JPanel quantumHistoryTable;
-    private javax.swing.JScrollPane tableScrollPane;
-    private javax.swing.JScrollPane graphScrollPane;
-    private javax.swing.JScrollPane quantumScroll;
+    private javax.swing.JPanel bottomPanel;
+    private javax.swing.JPanel processTablePanel;
+    private javax.swing.JPanel quantumTablePanel;
+    private javax.swing.JScrollPane timelineScrollPane;
+    private javax.swing.JScrollPane processTableScrollPane;
+    private javax.swing.JScrollPane quantumTableScrollPane;
     // End of variables declaration
 }
