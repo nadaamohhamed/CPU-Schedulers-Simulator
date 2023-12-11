@@ -33,7 +33,7 @@ public class OutputScreen extends JFrame {
     }
 
     private void initComponents() {
-
+        setTitle("CPU Schedulers Simulator");
         timelinePanel = new ProcessTimelineGraph(scheduler);
         processTablePanel = new ProcessTablePanel(scheduler);
         quantumTablePanel = new QuantumHistoryTablePanel(scheduler);
