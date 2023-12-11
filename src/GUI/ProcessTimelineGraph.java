@@ -6,13 +6,15 @@ import Schedulers.Scheduler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Vector;
 
 import static java.lang.Integer.max;
 
-public class ProcessTimelineGraph extends JPanel {
+public class ProcessTimelineGraph extends JPanel implements MouseListener {
 
     private static final int RECTANGLE_HEIGHT = 30; // Height for each process rectangle
     private static final int RECTANGLE_GAP = 10; // Gap between each process rectangle
@@ -30,6 +32,10 @@ public class ProcessTimelineGraph extends JPanel {
         initProcesses();
         calculatePreferredSize();
         setPreferredSize(new Dimension(preferredWidth, preferredHeight));
+        addMouseListener(this);
+        ToolTipManager.sharedInstance().setInitialDelay(0);
+        setToolTipText("");
+        ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE); // Tooltips won't disappear automatically
     }
 
     public void initProcesses(){
@@ -94,6 +100,54 @@ public class ProcessTimelineGraph extends JPanel {
         }
         return mx;
     }
+    @Override
+    public String getToolTipText(MouseEvent event) {
+        // Find the rectangle under the mouse pointer
+        int level = 0;
+
+        for (Process p : processes) {
+            int startY = 50 + level * (RECTANGLE_HEIGHT + RECTANGLE_GAP);
+            int endY = startY + RECTANGLE_HEIGHT;
+
+            for (Vector<Integer> startEnd : p.getStartEndTime()) {
+                int startX = getXCoordinate(startEnd.get(0));
+                int endX = getXCoordinate(startEnd.get(1));
+
+                if (event.getX() >= startX && event.getX() <= endX && event.getY() >= startY && event.getY() <= endY) {
+                    // Custom Tooltip design using base HTML syntax
+                    return "<html><font color='red'><b>Process</b>:</font> " + p.getName() + "<br>" +
+                            "<font color='blue'><b>Start Time</b>:</font> " + startEnd.get(0) + "<br>" +
+                            "<font color='green'><b>End Time</b>:</font> " + startEnd.get(1) + "</html>";
+                }
+            }
+            level++;
+        }
+        return null;
+    }
 
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }

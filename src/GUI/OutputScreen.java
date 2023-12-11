@@ -35,9 +35,13 @@ public class OutputScreen extends javax.swing.JFrame {
     private void initComponents() {
         timelinePanel = new ProcessTimelineGraph(scheduler);
         tablePanel = new ProcessTablePanel(scheduler);
+        quantumHistoryTable = new QuantumHistoryTablePanel(scheduler);
 
         graphScrollPane = new javax.swing.JScrollPane();
         tableScrollPane = new javax.swing.JScrollPane();
+        quantumScroll = new javax.swing.JScrollPane();
+
+
 
         GraphTitle = new javax.swing.JLabel();
         TableTitle = new javax.swing.JLabel();
@@ -46,6 +50,11 @@ public class OutputScreen extends javax.swing.JFrame {
         scheduleLabel = new javax.swing.JLabel();
         awtLabel = new javax.swing.JLabel();
         atatLabel = new javax.swing.JLabel();
+
+        if(!scheduleInstance.equals("AG Scheduler")){
+            quantumHistoryTable.setVisible(false);
+            quantumScroll.setVisible(false);
+        }
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -80,6 +89,10 @@ public class OutputScreen extends javax.swing.JFrame {
         tableScrollPane.setViewportView(tablePanel);
         tableScrollPane.setPreferredSize(new Dimension(620, 432));
 
+        quantumScroll.setViewportView(quantumHistoryTable);
+        quantumScroll.setPreferredSize(new Dimension(620, 174));
+
+
         GraphTitle.setFont(new java.awt.Font("Segoe UI", 1, 24));
         GraphTitle.setText("CPU Scheduling Graph");
 
@@ -98,6 +111,19 @@ public class OutputScreen extends javax.swing.JFrame {
         atatLabel.setFont(new java.awt.Font("Segoe UI", 1, 14));
         atatLabel.setText("ATAT: " + scheduler.getAverageTurnAroundTime());
 
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(quantumHistoryTable);
+        quantumHistoryTable.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 620, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 174, Short.MAX_VALUE)
+        );
+
+        quantumScroll.setViewportView(quantumHistoryTable);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(BottomPanel);
         BottomPanel.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -109,7 +135,8 @@ public class OutputScreen extends javax.swing.JFrame {
                                         .addComponent(awtLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(atatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(scheduleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(324, 324, 324)
+                                .addComponent(quantumScroll))
         );
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,6 +150,7 @@ public class OutputScreen extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(atatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(quantumScroll)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -174,7 +202,9 @@ public class OutputScreen extends javax.swing.JFrame {
     private javax.swing.JPanel timelinePanel;
     private javax.swing.JPanel BottomPanel;
     private javax.swing.JPanel tablePanel;
+    private javax.swing.JPanel quantumHistoryTable;
     private javax.swing.JScrollPane tableScrollPane;
     private javax.swing.JScrollPane graphScrollPane;
+    private javax.swing.JScrollPane quantumScroll;
     // End of variables declaration
 }

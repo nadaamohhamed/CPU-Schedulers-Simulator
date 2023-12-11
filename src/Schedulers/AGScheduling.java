@@ -53,15 +53,15 @@ public class AGScheduling extends Scheduler {
     void addHistory(){
         // loop over all processes and add their quantum to the quantum updates history
 
-        activeProcess.quantumUpdates.add(activeProcess.getQuantum());
+        activeProcess.getQuantumUpdates().add(activeProcess.getQuantum());
         for(AGProcess process : AGProcesses){
-            process.quantumUpdates.add(process.getQuantum());
+            process.getQuantumUpdates().add(process.getQuantum());
         }
         for(AGProcess process : readyQueue){
-            process.quantumUpdates.add(process.getQuantum());
+            process.getQuantumUpdates().add(process.getQuantum());
         }
         for(AGProcess process : dieList){
-            process.quantumUpdates.add(process.getQuantum());
+            process.getQuantumUpdates().add(process.getQuantum());
         }
     }
     @Override
