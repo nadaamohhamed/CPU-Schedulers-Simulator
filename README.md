@@ -20,10 +20,13 @@ will generate random processes with random data. For each simulation our program
 ## Preview
 - SJF Scheduling simulation output (Non-preemptive)
 <img src="/img/SJF.png" alt="Alt text" title="SJF-Scheduling">
+
 - Priority Scheduling simulation output (Non-preemptive)
 <img src="/img/Priority.png" alt="Alt text" title="Prioity-Scheduling">
+
 - SRTF Scheduling simulation output (Preemptive)
 <img src="/img/SRTF.png" alt="Alt text" title="SRTF-Scheduling">
+
 - AG Scheduling simulation output (Preemptive)
 <img src="/img/AG.png" alt="Alt text" title="AG-Scheduling">
 
