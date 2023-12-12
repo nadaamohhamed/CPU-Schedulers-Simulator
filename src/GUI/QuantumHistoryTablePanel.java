@@ -1,6 +1,7 @@
 package GUI;
 
-import Process.Process;
+import Process.AGProcess;
+import Schedulers.AGScheduling;
 import Schedulers.Scheduler;
 
 import javax.swing.*;
@@ -22,6 +23,8 @@ public class QuantumHistoryTablePanel extends JPanel {
     private int preferredHeight;
 
     public QuantumHistoryTablePanel(Scheduler scheduler) {
+        if(!(scheduler instanceof AGScheduling))
+            return;
         this.scheduler = scheduler;
         initData();
         calculateDimension();
@@ -34,18 +37,19 @@ public class QuantumHistoryTablePanel extends JPanel {
     }
 
     private void initData(){
-        ArrayList<Process> processes = scheduler.getProcesses();
+        ArrayList<AGProcess> AGProcesses =  ((AGScheduling) scheduler).getAGProcesses();
 
         columnNames = new ArrayList<>();
         columnNames.add("Iteration");
 
+        int quantumTableSize = AGProcesses.get(0).getQuantumUpdates().size();
         quantumTable = new ArrayList<>();
-        for(int i = 0; i < processes.get(0).getQuantumUpdates().size(); i++){
+        for(int i = 0; i < quantumTableSize; i++){
             quantumTable.add(new ArrayList<>());
             quantumTable.get(i).add("Iteration " + (i + 1));
         }
 
-        for(Process p : processes){
+        for(AGProcess p : AGProcesses){
             columnNames.add(p.getName());
             int iteration = 1;
             for(Integer q : p.getQuantumUpdates()){

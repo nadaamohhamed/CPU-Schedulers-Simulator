@@ -7,17 +7,27 @@ import java.util.*;
 
 
 public class AGScheduling extends Scheduler {
-    ArrayList<AGProcess> AGProcesses;
-    Queue<AGProcess> readyQueue = new LinkedList<>();
-    ArrayList<AGProcess> dieList = new ArrayList<>();
-    AGProcess activeProcess = null;
+    private ArrayList<AGProcess> AGProcesses;
+    private Queue<AGProcess> readyQueue = new LinkedList<>();
+    private ArrayList<AGProcess> dieList = new ArrayList<>();
+    private AGProcess activeProcess = null;
+    private int RRQuantum;
 
-    public AGScheduling(int numOfProcesses, ArrayList<Process> processes) {
+    public AGScheduling(int numOfProcesses, ArrayList<Process> processes, int RRQuantum) {
         super(numOfProcesses, processes, "AG Schedule");
+        this.RRQuantum = RRQuantum;
         AGProcesses = new ArrayList<>();
     }
 
-    public int calculateAGFactor(Process process) {
+    public int getRRQuantum() {
+        return RRQuantum;
+    }
+
+    public ArrayList<AGProcess> getAGProcesses() {
+        return AGProcesses;
+    }
+
+    public int calculateAGFactor(AGProcess process) {
         int AGFactor = process.getArrivalTime() + process.getBurstTime();
         if (process.getRandomFunction() > 10)
             AGFactor += 10;
@@ -40,7 +50,7 @@ public class AGScheduling extends Scheduler {
 
     void setAGFactor() {
         for (int i = 0; i < numOfProcesses; i++) {
-            AGProcess process =  new AGProcess(processes.get(i));
+            AGProcess process =  new AGProcess(processes.get(i), RRQuantum);
             process.setAGFactor(calculateAGFactor(process));
             AGProcesses.add(process);
         }
@@ -148,6 +158,8 @@ public class AGScheduling extends Scheduler {
 
         ArrayList<Process> processes = new ArrayList<>(dieList);
         setProcesses(processes);
+        AGProcesses.addAll(dieList);
+        AGProcesses.sort(Comparator.comparingInt(Process::getIndex));
         for (Process p : processes) {
             averageWaitingTime += p.getWaitingTime();
             averageTurnAroundTime += p.getTurnAroundTime();

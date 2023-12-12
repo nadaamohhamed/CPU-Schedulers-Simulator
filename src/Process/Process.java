@@ -8,27 +8,22 @@ public class Process {
     private int turnAroundTime;
     private int remainingTime;
     private int waitingTime;
-    private int randomFunction;
     private int priority;
-    private int quantum;
     private int PID;
     private int index;
     private String name;
     private String color;
     private Vector<Vector<Integer>> startEndTime = new Vector<>();
-    private Vector<Integer> quantumUpdates = new Vector<>();
 
-    public Process(String name, String color, int arrivalTime, int burstTime, int priority, int quantum, int id, int index) {
+    public Process(String name, String color, int arrivalTime, int burstTime, int priority, int id, int index) {
         this.name = name;
         this.color = color;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.priority = priority;
-        this.quantum = quantum;
         this.remainingTime = burstTime;
         this.turnAroundTime = 0;
         this.waitingTime = 0;
-        this.randomFunction = (int) (Math.random() * 20);
         this.PID = id;
         this.index = index;
     }
@@ -73,28 +68,12 @@ public class Process {
         this.waitingTime = waitingTime;
     }
 
-    public int getRandomFunction() {
-        return randomFunction;
-    }
-
-    public void setRandomFunction(int randomFunction) {
-        this.randomFunction = randomFunction;
-    }
-
     public int getPriority() {
         return priority;
     }
 
     public void setPriority(int priority) {
         this.priority = priority;
-    }
-
-    public int getQuantum() {
-        return quantum;
-    }
-
-    public void setQuantum(int quantum) {
-        this.quantum = quantum;
     }
 
     public int getPID() {
@@ -136,18 +115,10 @@ public class Process {
     public void setStartEndTime(Vector<Vector<Integer>> startEndTime) {
         this.startEndTime = startEndTime;
     }
-
-    public Vector<Integer> getQuantumUpdates() {
-        return quantumUpdates;
-    }
-
-    public void setQuantumUpdates(Vector<Integer> quantumUpdates) {
-        this.quantumUpdates = quantumUpdates;
-    }
     public Process copy(){
         return (new Process(
                 name, color, arrivalTime, burstTime,
-                priority, quantum, PID, index
+                priority, PID, index
         ));
     }
 }

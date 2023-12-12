@@ -1,6 +1,7 @@
 import GUI.OutputScreen;
 import Process.Process;
 import Schedulers.*;
+import Utilities.ProcessDataGenerator;
 import Utilities.ProcessDataReader;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class Main {
 
         while (true) {
             if(readingFromFile){
-//                ProcessDataGenerator.generateAndWriteProcessData("process_data.txt");
+                ProcessDataGenerator.generateAndWriteProcessData("process_data.txt");
                 ProcessDataReader.readProcessesFromFile("process_data.txt");
                 numOfProcesses = ProcessDataReader.numOfProcesses;
                 RRQuantum = ProcessDataReader.quantumValue;
@@ -60,7 +61,7 @@ public class Main {
                     System.out.println("Process " + (i + 1) + " priority number:");
                     System.out.print(">> ");
                     priority = scan.nextInt();
-                    Process process = new Process(name, color, arrivalTime, burstTime, priority, RRQuantum, IDs++, i);
+                    Process process = new Process(name, color, arrivalTime, burstTime, priority, IDs++, i);
                     processes.add(process);
                 }
             }
@@ -88,7 +89,7 @@ public class Main {
                     case "1" -> scheduler = new SJF(numOfProcesses, currProcesses, contextSwitching);
                     case "2" -> scheduler = new SRTF(numOfProcesses, currProcesses);
                     case "3" -> scheduler = new PriorityScheduling(numOfProcesses, currProcesses);
-                    case "4" -> scheduler = new AGScheduling(numOfProcesses, currProcesses);
+                    case "4" -> scheduler = new AGScheduling(numOfProcesses, currProcesses, RRQuantum);
                     case "5" -> showOptions = false;
                     case "6" -> {
                         System.out.println("Thank you for using our simulator!");

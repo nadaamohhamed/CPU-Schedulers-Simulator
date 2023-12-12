@@ -32,7 +32,7 @@ public class ProcessDataReader {
                 int PID = (int) (Math.random() * (5000 - 1) + 1);
 
                 // Create Process instance and add it to the list
-                Process process = new Process(name, color, arrivalTime, burstTime, priority, quantumValue, PID, i);
+                Process process = new Process(name, color, arrivalTime, burstTime, priority, PID, i);
                 readProcesses.add(process);
             }
             processes = readProcesses;
