@@ -32,7 +32,7 @@ public class AGScheduling extends Scheduler {
         if (process.getRandomFunction() > 10)
             AGFactor += 10;
         else if (process.getRandomFunction() < 10)
-            AGFactor += process.getRandomFunction();
+           AGFactor += process.getRandomFunction();
         else
             AGFactor += process.getPriority();
 
@@ -55,10 +55,10 @@ public class AGScheduling extends Scheduler {
             AGProcesses.add(process);
         }
         // to be like the example in assignment pdf uncomment the following lines
-        AGProcesses.get(0).setAGFactor(20);
-        AGProcesses.get(1).setAGFactor(17);
-        AGProcesses.get(2).setAGFactor(16);
-        AGProcesses.get(3).setAGFactor(43);
+//        AGProcesses.get(0).setAGFactor(20);
+//        AGProcesses.get(1).setAGFactor(17);
+//        AGProcesses.get(2).setAGFactor(16);
+//        AGProcesses.get(3).setAGFactor(43);
     }
     void addHistory(){
         // loop over all processes and add their quantum to the quantum updates history
