@@ -3,8 +3,12 @@ import Process.Process;
 import java.util.*;
 
 public class PriorityScheduling extends Scheduler {
+    int[] originalPriority = new int[numOfProcesses];
     public PriorityScheduling(int numOfProcesses, ArrayList<Process> processes) {
         super(numOfProcesses, processes, "Priority Schedule");
+
+        for (Process p : processes)
+            originalPriority[p.getIndex()] = p.getPriority();
     }
 
     @Override
@@ -59,10 +63,11 @@ public class PriorityScheduling extends Scheduler {
         setProcesses(finishedList);
 
         for (Process p : processes) {
+            p.setPriority(originalPriority[p.getIndex()]);
             averageWaitingTime += p.getWaitingTime();
             averageTurnAroundTime += p.getTurnAroundTime();
         }
-        averageWaitingTime /= numOfProcesses;
-        averageTurnAroundTime /= numOfProcesses;
+        averageWaitingTime /=(float) numOfProcesses;
+        averageTurnAroundTime /= (float)numOfProcesses;
     }
 }
