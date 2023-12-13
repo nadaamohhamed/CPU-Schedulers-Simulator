@@ -2,6 +2,8 @@ package GUI;
 
 
 import Process.Process;
+import Process.AGProcess;
+import Schedulers.AGScheduling;
 import Schedulers.Scheduler;
 
 import javax.swing.*;
@@ -117,7 +119,11 @@ public class ProcessTimelineGraph extends JPanel implements MouseListener {
                     // Custom Tooltip design using base HTML syntax
                     return "<html><font color='red'><b>Process</b>:</font> " + p.getName() + "<br>" +
                             "<font color='blue'><b>Start Time</b>:</font> " + startEnd.get(0) + "<br>" +
-                            "<font color='green'><b>End Time</b>:</font> " + startEnd.get(1) + "</html>";
+                            "<font color='green'><b>End Time</b>:</font> " + startEnd.get(1) + "<br>" +
+                            "<font color='orange'><b>Arrival Time</b>:</font> " + p.getArrivalTime() + "<br>" +
+                            "<font color='purple'><b>Burst Time</b>:</font> " + p.getBurstTime() + "<br>" +
+                            (scheduler instanceof AGScheduling ? "<font color='black'><b>AG Factor</b>: </font> " + ( (AGProcess) p).getAGFactor(): "") +
+                            "</html>";
                 }
             }
             level++;
