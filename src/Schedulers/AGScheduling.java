@@ -159,6 +159,7 @@ public class AGScheduling extends Scheduler {
         ArrayList<Process> processes = new ArrayList<>(dieList);
         setProcesses(processes);
         AGProcesses.addAll(dieList);
+        // sort the processes by their index for sorted printing in gui quantum table
         AGProcesses.sort(Comparator.comparingInt(Process::getIndex));
         for (Process p : processes) {
             averageWaitingTime += p.getWaitingTime();

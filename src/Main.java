@@ -1,6 +1,7 @@
 import GUI.OutputScreen;
 import Process.Process;
 import Schedulers.*;
+import Utilities.ProcessDataGenerator;
 import Utilities.ProcessDataReader;
 
 import java.util.ArrayList;
@@ -16,8 +17,9 @@ public class Main {
         System.out.println("-------------------------------------------------------------");
 
         while (true) {
+            // comment the following lines till (else) if you want to enter the inputs manually from the console
             if(readingFromFile){
-//                ProcessDataGenerator.generateAndWriteProcessData("process_data.txt");
+                ProcessDataGenerator.generateAndWriteProcessData("process_data.txt");
                 ProcessDataReader.readProcessesFromFile("process_data.txt");
                 numOfProcesses = ProcessDataReader.numOfProcesses;
                 RRQuantum = ProcessDataReader.quantumValue;
@@ -39,8 +41,8 @@ public class Main {
                 System.out.print(">> ");
                 contextSwitching = scan.nextInt();
 
+                // generate random PIDs for processes
                 int IDs = (int) (Math.random() * (5000 - 1) + 1);
-
 
                 for (int i = 0; i < numOfProcesses; i++) {
                     System.out.println("-------------------------------------------------------------");

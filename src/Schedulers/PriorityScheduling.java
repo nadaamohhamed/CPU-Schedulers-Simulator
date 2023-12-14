@@ -17,7 +17,15 @@ public class PriorityScheduling extends Scheduler {
         processes.sort(Comparator.comparingInt(Process::getArrivalTime));
 
         // Create a priority queue to store the ready processes
-        PriorityQueue<Process> readyQueue = new PriorityQueue<>(Comparator.comparingInt(Process::getPriority));
+        PriorityQueue<Process> readyQueue = new PriorityQueue<>(new Comparator<Process>() {
+            public int compare(Process p1, Process p2) {
+                if (p1.getPriority() == p2.getPriority()) {
+                    // if priority is equal, compare arrival time
+                    return Integer.compare(p1.getArrivalTime(), p2.getArrivalTime());
+                }
+                return Integer.compare(p1.getPriority(), p2.getPriority());
+            }
+        });
         // Create a list to store the finished processes
         ArrayList<Process> finishedList = new ArrayList<>();
         // Initialize the current time and the current process index
@@ -55,6 +63,7 @@ public class PriorityScheduling extends Scheduler {
 
             for (Process p : readyQueue) {
                 int waitingTime = currentTime - p.getArrivalTime();
+                // decrease priority for every 10 units of waiting time to be higher priority (aging)
                 int priorityIncrease = waitingTime / 10;
                 p.setPriority(Math.max(0, p.getPriority() - priorityIncrease));
             }
