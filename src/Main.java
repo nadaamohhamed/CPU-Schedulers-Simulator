@@ -28,8 +28,6 @@ public class Main {
                 processes = ProcessDataReader.processes;
                 System.out.println("-------------------------------------------------------------");
             }else {
-                System.out.println("-------------------------------------------------------------");
-
                 System.out.println("What is the number of processes?");
                 System.out.print(">> ");
                 numOfProcesses = scan.nextInt();
@@ -73,7 +71,7 @@ public class Main {
                     1. SJF - Non-preemptive
                     2. SRTF - Preemptive
                     3. Priority Scheduling - Non-preemptive
-                    4. AG Scheduling
+                    4. AG Scheduling - Preemptive
                     5. Return and add new inputs
                     6. Exit
                     """;

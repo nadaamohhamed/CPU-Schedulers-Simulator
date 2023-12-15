@@ -21,7 +21,7 @@ public class SRTF extends Scheduler {
     //increases priority by 1
     public void age(PriorityQueue<Process> readyQueue) {
         for (Process p : readyQueue) {
-            if (p.getPriority() > 1)
+            if (p.getPriority() >= 1)
                 p.setPriority(p.getPriority() - 1);
         }
     }
@@ -110,7 +110,7 @@ public class SRTF extends Scheduler {
             }
             time++;
         }
-        // restore original priorities & add the TAT & WT
+        // restore original priorities for gui processes information & add the TAT & WT
         for (Process p : dieList) {
             p.setPriority(originalPriority[p.getIndex()]);
             averageTurnAroundTime += p.getTurnAroundTime();

@@ -71,6 +71,7 @@ public class PriorityScheduling extends Scheduler {
         // Set the processes to the finished list
         setProcesses(finishedList);
 
+        // restore original priorities for gui processes information & add the TAT & WT
         for (Process p : processes) {
             p.setPriority(originalPriority[p.getIndex()]);
             averageWaitingTime += p.getWaitingTime();
