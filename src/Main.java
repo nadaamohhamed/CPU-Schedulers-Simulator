@@ -17,7 +17,8 @@ public class Main {
         System.out.println("-------------------------------------------------------------");
 
         while (true) {
-            // comment the following lines till (else) if you want to enter the inputs manually from the console
+            // uncomment the following line if you want to enter the inputs manually from the console
+             // readingFromFile = false;
             if(readingFromFile){
                 ProcessDataGenerator.generateAndWriteProcessData("process_data.txt");
                 ProcessDataReader.readProcessesFromFile("process_data.txt");

@@ -16,8 +16,8 @@ public class ProcessDataGenerator {
     public static void generateAndWriteProcessData(String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
 
-            int quantumValue = getRandomNumberInRange(0, 10);
-            int contextSwitchingTime = getRandomNumberInRange(0, 0);
+            int quantumValue = getRandomNumberInRange(1, 10);
+            int contextSwitchingTime = getRandomNumberInRange(1, 1);
 
 
             writer.write(String.valueOf(NUMBER_OF_PROCESSES));
